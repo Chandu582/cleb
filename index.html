@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIRE FITNESS // CYBERFIT — Ultra-Futuristic 3D Gym & Performance</title>
+  <meta name="description" content="Next-generation luxury 3D fitness and gym experience. Biomechanical training, neural-adaptive programming, and elite athletic performance.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&family=Outfit:wght@400;600;700;800;900&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Three.js (3D WebGL Library) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  
+  <!-- Canvas Confetti for VIP celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" defer></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- =================================================================
+       SITE HEADER / NAVIGATION
+       ================================================================= -->
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a href="#" class="brand-logo" id="nav-brand-link">
+        <span class="brand-badge">🔥</span>
+        <span>FIRE FITNESS<span class="text-lime font-mono"> // </span>ELITE</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#hero" class="nav-link">Overview</a></li>
+          <li><a href="#why-us" class="nav-link">Why Us</a></li>
+          <li><a href="#programs" class="nav-link">Programs</a></li>
+          <li><a href="#biometrics" class="nav-link">Biometrics</a></li>
+          <li><a href="#trainers" class="nav-link">Trainers</a></li>
+          <li><a href="#calculator" class="nav-link">Macro Lab</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Audio SFX Toggle Button -->
+        <button class="sfx-toggle active" id="sfx-toggle-btn" title="Toggle Futuristic Cyber Sound Effects">
+          <span class="sfx-pulse-dot"></span>
+          <span class="sfx-text">AUDIO: ON</span>
+        </button>
+
+        <!-- VIP Pass Modal Trigger -->
+        <button class="btn-neon nav-cta open-vip-modal-btn" id="nav-vip-btn">
+          CLAIM VIP PASS
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================================================================
+       SECTION 1: HERO SECTION & 3D INTERACTIVE GYM GEAR CANVAS
+       ================================================================= -->
+  <section class="hero-section" id="hero">
+    <div class="hero-bg-overlay"></div>
+    <div class="cyber-grid-floor"></div>
+
+    <div class="container hero-content-grid">
+      <!-- Left Column: Copy & CTAs -->
+      <div class="hero-text-col">
+        <div class="hero-badge-live">
+          <span class="active-pulse-dot"></span>
+          <span>NEURAL BIOMECHANICS V4.2 • SYSTEM ACTIVE</span>
+        </div>
+
+        <h1 class="hero-headline">
+          <span class="split-word">SCULPT</span> <span class="split-word">YOUR</span> <span class="split-word">BODY,</span><br>
+          <span class="neon-highlight split-word">ELEVATE</span> <span class="split-word">YOUR</span> <span class="split-word">SPIRIT</span>
+        </h1>
+
+        <p class="hero-subtext">
+          Where elite human physiology converges with cutting-edge cybernetics. Experience high-intensity fiery strength training, real-time biometric telemetry, and bespoke athletic conditioning.
+        </p>
+
+        <div class="hero-cta-group">
+          <button class="btn-neon btn-hero-cta open-vip-modal-btn" id="hero-main-cta">
+            LET'S START <span class="arrow-icon">&gt;&gt;&gt;</span>
+          </button>
+          <a href="#programs" class="btn-outline" id="hero-explore-cta">
+            EXPLORE PROTOCOLS
+          </a>
+        </div>
+
+        <!-- Social Proof Avatars -->
+        <div class="hero-social-proof">
+          <div class="avatar-stack">
+            <img src="assets/images/member_1.jpg" alt="Rahul Kumar (Active Member)" decoding="async">
+            <img src="assets/images/member_2.jpg" alt="Priya Kumari (Active Member)" decoding="async">
+            <img src="assets/images/member_3.jpg" alt="Vikash Patel (Active Member)" decoding="async">
+            <img src="assets/images/member_4.jpg" alt="Amit Kumar (Active Member)" decoding="async">
+          </div>
+          <div class="avatar-metric">
+            <div class="avatar-count">
+              <span class="active-pulse-dot"></span>
+              <span>1.2k+ Active Members</span>
+            </div>
+            <div class="avatar-label">★ 4.98 / 5.0 Global Athletic Rating</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Central 3D Interactive Canvas & Floating HUD Badges -->
+      <div class="hero-3d-wrapper">
+        <!-- Orbiting Floating HUD Metric Badges -->
+        <div class="hud-badge hud-badge-1" id="hud-badge-time">
+          <div class="hud-icon-box hud-icon-lime">⏱️</div>
+          <div class="hud-data">
+            <span class="hud-value">1.5 Hours</span>
+            <span class="hud-label">Daily Session Target</span>
+          </div>
+        </div>
+
+        <div class="hud-badge hud-badge-2" id="hud-badge-energy">
+          <div class="hud-icon-box hud-icon-orange">🔥</div>
+          <div class="hud-data">
+            <span class="hud-value">550 Kcal</span>
+            <span class="hud-label">Active Burn Rate</span>
+          </div>
+        </div>
+
+        <div class="hud-badge hud-badge-3" id="hud-badge-poses">
+          <div class="hud-icon-box hud-icon-cyan">⚡</div>
+          <div class="hud-data">
+            <span class="hud-value">20 Poses</span>
+            <span class="hud-label">AI Kinematic Routines</span>
+          </div>
+        </div>
+
+        <div class="hud-badge hud-badge-4" id="hud-badge-sets">
+          <div class="hud-icon-box hud-icon-purple">💪</div>
+          <div class="hud-data">
+            <span class="hud-value">5 Sets</span>
+            <span class="hud-label">Hypertrophy Index</span>
+          </div>
+        </div>
+
+        <!-- 3D WebGL Canvas Container -->
+        <div id="three-canvas-container" title="Drag to inspect 3D Biomechanical Gear"></div>
+
+        <!-- 3D Canvas Controls HUD Overlay -->
+        <div class="canvas-cyber-controls">
+          <button class="canvas-control-btn" id="toggle-wireframe-btn" title="Toggle Cyber Wireframe Shader">
+            ⚡ CYBER WIRE
+          </button>
+          <button class="canvas-control-btn" id="toggle-speed-btn" title="Toggle High-Speed Gyro">
+            🔄 NORMAL ROTATION
+          </button>
+          <button class="canvas-control-btn" id="reset-3d-btn" title="Reset Camera">
+            🎯 RESET VIEW
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Certified Gym Equipment & Facility Standards Marquee Ticker -->
+    <div class="sponsor-ticker-wrap">
+      <div class="ticker-header-bar">
+        <span class="ticker-badge">⚡ ELITE GEAR // CERTIFIED TRAINING INFRASTRUCTURE</span>
+      </div>
+      <div class="sponsor-ticker-track">
+        <div class="sponsor-item"><span class="ticker-icon">⚡</span><span>COMMERCIAL DUAL-PULLEY CABLES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🛡️</span><span>HEAVY OLYMPIC SQUAT CAGES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🔥</span><span>CAST IRON HEX DUMBBELLS (2.5KG - 50KG)</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">⚡</span><span>45° INCLINE LEG PRESS &amp; HACK SQUAT</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🛡️</span><span>DEDICATED CALISTHENICS RIGS</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🔥</span><span>HIGH-VELOCITY AIR RESISTANCE BIKES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">⚡</span><span>BIO-MECHANICAL ADJUSTABLE BENCHES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🛡️</span><span>SUB-ZERO COLD PLUNGE ZONE</span><span class="sponsor-dot"></span></div>
+        <!-- Duplicated for seamless infinite loop -->
+        <div class="sponsor-item"><span class="ticker-icon">⚡</span><span>COMMERCIAL DUAL-PULLEY CABLES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🛡️</span><span>HEAVY OLYMPIC SQUAT CAGES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🔥</span><span>CAST IRON HEX DUMBBELLS (2.5KG - 50KG)</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">⚡</span><span>45° INCLINE LEG PRESS &amp; HACK SQUAT</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🛡️</span><span>DEDICATED CALISTHENICS RIGS</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🔥</span><span>HIGH-VELOCITY AIR RESISTANCE BIKES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">⚡</span><span>BIO-MECHANICAL ADJUSTABLE BENCHES</span><span class="sponsor-dot"></span></div>
+        <div class="sponsor-item"><span class="ticker-icon">🛡️</span><span>SUB-ZERO COLD PLUNGE ZONE</span><span class="sponsor-dot"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 2: WHY CHOOSE US (BENTO GRID LAYOUT)
+       ================================================================= -->
+  <section class="section-padding" id="why-us">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">UNRIVALED ADVANTAGE</div>
+        <h2 class="section-title">WHY CHOOSE <span class="text-lime">FIRE FITNESS</span></h2>
+        <p class="section-desc">
+          Engineered for high performers who demand more than generic gym equipment. We combine cutting-edge telemetry, scientific nutrition, and elite human coaching.
+        </p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Bento Card 1: Real-time Progress Tracking (Wide) -->
+        <div class="bento-card bento-card-1" id="bento-card-progress">
+          <div class="bento-glare"></div>
+          <div class="bento-content">
+            <div class="bento-icon-badge">📈</div>
+            <h3 class="bento-title">Real-Time Progress Telemetry</h3>
+            <p class="bento-text">
+              Track muscular output, VO2 kinetics, and neurological fatigue with sub-millisecond sensor precision. Compare daily sessions against your all-time athletic benchmarks.
+            </p>
+          </div>
+
+          <!-- Interactive SVG Metric Graph -->
+          <div class="bento-graph-container">
+            <div class="graph-header">
+              <div class="graph-metric-display">
+                <span class="font-mono text-lime" id="graph-stat-val" style="font-size: 1.25rem; font-weight: 800;">164 BPM</span>
+                <span class="text-muted font-mono" id="graph-stat-lbl" style="font-size: 0.72rem; margin-left: 8px;">PEAK HEART RATE</span>
+              </div>
+              <div class="graph-tabs">
+                <button class="graph-tab-btn active" data-metric="bpm">BPM</button>
+                <button class="graph-tab-btn" data-metric="power">POWER</button>
+                <button class="graph-tab-btn" data-metric="kcal">KCAL</button>
+                <button class="graph-tab-btn" data-metric="reps">REPS</button>
+              </div>
+            </div>
+
+            <div class="graph-svg-wrap">
+              <svg viewBox="0 0 530 120">
+                <defs>
+                  <linearGradient id="lime-gradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ff1e00" stop-opacity="0.7"/>
+                    <stop offset="60%" stop-color="#ff6600" stop-opacity="0.3"/>
+                    <stop offset="100%" stop-color="#ff1e00" stop-opacity="0.0"/>
+                  </linearGradient>
+                </defs>
+                <path id="graph-area" class="graph-area-path" d="M 10 90 Q 60 40 120 70 T 220 30 T 320 60 T 420 20 T 520 40 L 520 120 L 10 120 Z"/>
+                <path id="graph-line" class="graph-line-path" d="M 10 90 Q 60 40 120 70 T 220 30 T 320 60 T 420 20 T 520 40"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Card 2: Precision Nutrition Guidance -->
+        <div class="bento-card bento-card-2" id="bento-card-nutrition">
+          <div class="bento-glare"></div>
+          <div class="bento-content">
+            <div class="bento-icon-badge">🥗</div>
+            <h3 class="bento-title">Precision Nutrition Guidance</h3>
+            <p class="bento-text">
+              Dynamic macro-nutrient fuel formulas tailored to your metabolic expenditure and training cycle.
+            </p>
+
+            <!-- Macro Nutrition Donut Chart -->
+            <div class="macro-chart-wrap">
+              <div class="donut-svg-box">
+                <svg viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="40" fill="transparent" stroke="rgba(255,255,255,0.06)" stroke-width="12"/>
+                  <!-- Protein: 40% (offset 0) -->
+                  <circle cx="50" cy="50" r="40" fill="transparent" stroke="#ff2a00" stroke-width="12" stroke-dasharray="100.5 251.2" stroke-dashoffset="0"/>
+                  <!-- Carbs: 35% (offset 100.5) -->
+                  <circle cx="50" cy="50" r="40" fill="transparent" stroke="#ff7700" stroke-width="12" stroke-dasharray="87.9 251.2" stroke-dashoffset="-100.5"/>
+                  <!-- Fats: 25% (offset 188.4) -->
+                  <circle cx="50" cy="50" r="40" fill="transparent" stroke="#ffaa00" stroke-width="12" stroke-dasharray="62.8 251.2" stroke-dashoffset="-188.4"/>
+                </svg>
+                <div class="donut-center-text">
+                  <div class="donut-center-val">2.4k</div>
+                  <div class="donut-center-sub">KCAL</div>
+                </div>
+              </div>
+
+              <div class="macro-legend">
+                <div class="macro-legend-item">
+                  <span class="macro-legend-label"><span class="macro-color-dot protein"></span> Protein</span>
+                  <span class="macro-legend-pct">40% • 220g</span>
+                </div>
+                <div class="macro-legend-item">
+                  <span class="macro-legend-label"><span class="macro-color-dot carbs"></span> Carbs</span>
+                  <span class="macro-legend-pct">35% • 190g</span>
+                </div>
+                <div class="macro-legend-item">
+                  <span class="macro-legend-label"><span class="macro-color-dot fats"></span> Healthy Fats</span>
+                  <span class="macro-legend-pct">25% • 65g</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Card 3: Master Coaches & IFBB Pros -->
+        <div class="bento-card bento-card-3" id="bento-card-coaches">
+          <div class="bento-glare"></div>
+          <div class="bento-content">
+            <div class="bento-icon-badge">🏆</div>
+            <h3 class="bento-title">Elite Master Coaches</h3>
+            <p class="bento-text">
+              1-on-1 direct access to Olympic lifting medalists, biomechanists, and IFBB Pro coaches dedicated to perfecting your kinetic technique.
+            </p>
+            <div style="display: flex; align-items: center; gap: 12px; margin-top: 14px;">
+              <span class="font-mono text-lime" style="font-size: 0.85rem; font-weight: 700;">● 12 COACHES ON FLOOR NOW</span>
+              <button class="open-vip-modal-btn" style="background: transparent; border: none; color: #fff; text-decoration: underline; font-size: 0.85rem; cursor: pointer;">Book Private Consult &rarr;</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bento Card 4: Elite VIP Membership -->
+        <div class="bento-card bento-card-4" id="bento-card-membership">
+          <div class="bento-glare"></div>
+          <div class="bento-content">
+            <div class="bento-icon-badge">💎</div>
+            <h3 class="bento-title">Elite VIP Membership</h3>
+            <p class="bento-text">
+              Comprehensive heavy strength racks, cardio conditioning floor, certified trainer guidance, and clean modern locker facilities.
+            </p>
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px;">
+              <span class="badge" style="background: rgba(255, 69, 0, 0.12); border: 1px solid rgba(255, 69, 0, 0.35); color: #ff5500; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-family: monospace;">PRO EQUIPMENT</span>
+              <span class="badge" style="background: rgba(255, 42, 0, 0.12); border: 1px solid rgba(255, 42, 0, 0.35); color: #ff2a00; padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-family: monospace;">CARDIO ZONE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 3: WORKOUT PROGRAMS (6-CARD INTERACTIVE GRID)
+       ================================================================= -->
+  <section class="section-padding" id="programs">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">TRAIN SMARTER</div>
+        <h2 class="section-title">UNLEASH YOUR <span class="text-lime">POTENTIAL</span></h2>
+        <p class="section-desc">
+          Engineered training disciplines built for radical transformation. Hover to activate full color protocols and tap to view deep curriculum details.
+        </p>
+      </div>
+
+      <div class="programs-grid">
+        <!-- Program 1: Barbell Basics -->
+        <div class="program-card" data-program="barbell">
+          <img src="assets/images/program_barbell.jpg" alt="Barbell Powerlifting" class="program-img-bg" loading="lazy" decoding="async">
+          <div class="program-card-overlay"></div>
+          <div class="program-card-content">
+            <span class="program-badge">01 // HEAVY STRENGTH</span>
+            <h3 class="program-title">Barbell Basics</h3>
+            <p class="program-desc">Maximal neurological force production, kinetic chain alignment, and raw deadlift power.</p>
+            <div class="program-meta">
+              <span>60 MIN • 4X/WK</span>
+              <div class="program-intensity-bar" title="Intensity: 5/5">
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program 2: Kettlebell Masterclass -->
+        <div class="program-card" data-program="kettlebell">
+          <img src="assets/images/trainer_marcus.jpg" alt="Kettlebell Masterclass" class="program-img-bg" loading="lazy" decoding="async">
+          <div class="program-card-overlay"></div>
+          <div class="program-card-content">
+            <span class="program-badge">02 // KINETIC POWER</span>
+            <h3 class="program-title">Kettlebell Masterclass</h3>
+            <p class="program-desc">Rotational torque, dynamic hip drive, and multi-planar athletic endurance under duress.</p>
+            <div class="program-meta">
+              <span>50 MIN • 3X/WK</span>
+              <div class="program-intensity-bar" title="Intensity: 4/5">
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program 3: Cardio Power Boost -->
+        <div class="program-card" data-program="cardio">
+          <img src="assets/images/trainer_sophia.jpg" alt="Cardio Power Boost" class="program-img-bg" loading="lazy" decoding="async">
+          <div class="program-card-overlay"></div>
+          <div class="program-card-content">
+            <span class="program-badge">03 // VO2 MAX ACCELERATOR</span>
+            <h3 class="program-title">Cardio Power Boost</h3>
+            <p class="program-desc">Targeted anaerobic threshold conditioning, air bike intervals, and rapid lactate clearance.</p>
+            <div class="program-meta">
+              <span>45 MIN • 4X/WK</span>
+              <div class="program-intensity-bar" title="Intensity: 5/5">
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program 4: Calisthenics Division -->
+        <div class="program-card" data-program="calisthenics">
+          <img src="assets/images/program_calisthenics.jpg" alt="Calisthenics Planche" class="program-img-bg" loading="lazy" decoding="async">
+          <div class="program-card-overlay"></div>
+          <div class="program-card-content">
+            <span class="program-badge">04 // RELATIVE STRENGTH</span>
+            <h3 class="program-title">Calisthenics Division</h3>
+            <p class="program-desc">Joint bulletproofing, straight-arm tendon power, front levers, and strict ring muscle-ups.</p>
+            <div class="program-meta">
+              <span>65 MIN • 4X/WK</span>
+              <div class="program-intensity-bar" title="Intensity: 4/5">
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program 5: Hypertrophy Division -->
+        <div class="program-card" data-program="hypertrophy">
+          <img src="assets/images/coach_sonu_ripped.jpg" alt="Hypertrophy Division - Sonu Raj Patel" class="program-img-bg" loading="lazy" decoding="async">
+          <div class="program-card-overlay"></div>
+          <div class="program-card-content">
+            <span class="program-badge">05 // HIGH-VOLUME MASS</span>
+            <h3 class="program-title">Hypertrophy Division</h3>
+            <p class="program-desc">Engineered mechanical tension, drop sets, and localized blood-volume myofibrillar growth.</p>
+            <div class="program-meta">
+              <span>75 MIN • 5X/WK</span>
+              <div class="program-intensity-bar" title="Intensity: 5/5">
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Program 6: HIIT Velocity -->
+        <div class="program-card" data-program="hiit">
+          <img src="assets/images/trainer_elena.jpg" alt="HIIT Velocity" class="program-img-bg" loading="lazy" decoding="async">
+          <div class="program-card-overlay"></div>
+          <div class="program-card-content">
+            <span class="program-badge">06 // METABOLIC BURN</span>
+            <h3 class="program-title">HIIT Velocity</h3>
+            <p class="program-desc">36-hour post-workout EPOC afterburn through sprint intervals and explosive plyometrics.</p>
+            <div class="program-meta">
+              <span>35 MIN • 3X/WK</span>
+              <div class="program-intensity-bar" title="Intensity: 5/5">
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+                <span class="intensity-pip active"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 4: DYNAMIC PERFORMANCE & BIOMETRIC TRACKER CARDS
+       ================================================================= -->
+  <section class="section-padding" id="biometrics" style="background: rgba(10, 10, 12, 0.4);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">LIVE TELEMETRY</div>
+        <h2 class="section-title">DYNAMIC <span class="text-lime">BIOMETRIC TRACKER</span></h2>
+        <p class="section-desc">
+          Medical-grade real-time waveform tracking. Adjust the workout intensity selector below to observe immediate cardiovascular responsiveness.
+        </p>
+      </div>
+
+      <div class="biometrics-wrap">
+        <!-- Card 1: Endurance Evolution (ECG Waveform) -->
+        <div class="tracker-card" id="tracker-card-ecg">
+          <div class="tracker-top">
+            <div class="tracker-title-box">
+              <div class="tracker-icon hud-icon-lime">💓</div>
+              <div>
+                <h3 class="tracker-name">Endurance Evolution</h3>
+                <span class="text-muted font-mono" style="font-size: 0.72rem;">CARDIAC WAVEFORM MONITOR</span>
+              </div>
+            </div>
+            <span class="tracker-status-pill tracker-status-live">
+              <span class="active-pulse-dot"></span> LIVE SENSOR
+            </span>
+          </div>
+
+          <div class="tracker-number-display">
+            <span class="tracker-big-num text-lime" id="live-bpm-display">164</span>
+            <span class="tracker-unit">BPM • ZONE 4 THRESHOLD</span>
+          </div>
+
+          <!-- Real-time Animated Canvas ECG -->
+          <div class="ecg-canvas-wrap">
+            <canvas id="ecg-canvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Card 2: Speed Surge (Cadence & Velocity) -->
+        <div class="tracker-card" id="tracker-card-speed">
+          <div class="tracker-top">
+            <div class="tracker-title-box">
+              <div class="tracker-icon hud-icon-cyan">⚡</div>
+              <div>
+                <h3 class="tracker-name">Speed Surge</h3>
+                <span class="text-muted font-mono" style="font-size: 0.72rem;">VELOCITY & STRIDE CADENCE</span>
+              </div>
+            </div>
+            <span class="tracker-status-pill tracker-status-live" style="color: #ff7700; border-color: rgba(255, 119, 0, 0.4); background: rgba(255, 119, 0, 0.12);">
+              <span class="active-pulse-dot" style="background: #ff7700; box-shadow: 0 0 8px #ff7700;"></span> OPTIMAL
+            </span>
+          </div>
+
+          <div class="tracker-number-display">
+            <span class="tracker-big-num" style="color: #ff7700;" id="live-step-count">8,420</span>
+            <span class="tracker-unit">STEPS TODAY</span>
+          </div>
+
+          <!-- Mini 3-Tile Performance Stat Board -->
+          <div class="step-gauge-container">
+            <div class="step-stat-tile">
+              <div class="step-stat-val" id="step-cadence-val">178 SPM</div>
+              <div class="step-stat-lbl">Stride Cadence</div>
+            </div>
+            <div class="step-stat-tile">
+              <div class="step-stat-val" id="burn-rate-val">16.8 KCAL</div>
+              <div class="step-stat-lbl">Per Minute</div>
+            </div>
+            <div class="step-stat-tile">
+              <div class="step-stat-val" style="color: #ffaa00;">98.4%</div>
+              <div class="step-stat-lbl">Kinetic Form</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Intensity Controller -->
+      <div class="intensity-controller-bar">
+        <div class="intensity-label-group">
+          <span style="font-size: 1.4rem;">🎛️</span>
+          <div>
+            <div style="font-family: var(--font-heading); font-weight: 700; color: #fff; font-size: 1rem;">
+              SIMULATE WORKOUT INTENSITY
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">
+              Watch real-time ECG frequency and calorie acceleration adjust instantly
+            </div>
+          </div>
+        </div>
+
+        <div class="intensity-btns">
+          <button class="intensity-tier-btn" data-tier="warmup">WARMUP (108 BPM)</button>
+          <button class="intensity-tier-btn" data-tier="aerobic">AEROBIC (136 BPM)</button>
+          <button class="intensity-tier-btn active" data-tier="threshold">THRESHOLD (164 BPM)</button>
+          <button class="intensity-tier-btn" data-tier="beast">🔥 BEAST MODE (188 BPM)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 5: ELITE TRAINERS & 3D COVERFLOW CAROUSEL
+       ================================================================= -->
+  <section class="section-padding" id="trainers">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">OLYMPIC CALIBER</div>
+        <h2 class="section-title">ELITE <span class="text-lime">TRAINER ROSTER</span></h2>
+        <p class="section-desc">
+          World champions, biomechanical researchers, and elite athletic coaches. Swipe or click to inspect their specialties.
+        </p>
+      </div>
+
+      <!-- 3D Coverflow Carousel -->
+      <div class="carousel-viewport">
+        <div class="carousel-stage">
+          <!-- Trainer 1: Sonu Raj Patel (Founder & Head Coach) -->
+          <div class="trainer-card" data-index="0">
+            <img src="assets/images/coach_sonu_flex.jpg" alt="Sonu Raj Patel" class="trainer-img" loading="lazy" decoding="async">
+            <div class="trainer-info-overlay">
+              <span class="trainer-role-badge" style="background: rgba(255, 42, 0, 0.25); border-color: #ff2a00; color: #ffffff;">FOUNDER & HEAD COACH</span>
+              <h3 class="trainer-name">Sonu Raj Patel</h3>
+              <p class="trainer-spec">Founder of Fire Fitness • Master Physique Transformation & Strength Conditioning</p>
+              <div class="trainer-stats-row">
+                <span>Athletes Coached: <strong>650+</strong></span>
+                <span>Experience: <strong>8+ Yrs</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trainer 2: Elena Rostova -->
+          <div class="trainer-card" data-index="1">
+            <img src="assets/images/trainer_elena.jpg" alt="Coach Elena Rostova" class="trainer-img" loading="lazy" decoding="async">
+            <div class="trainer-info-overlay">
+              <span class="trainer-role-badge">CALISTHENICS & MOBILITY</span>
+              <h3 class="trainer-name">Elena Rostova</h3>
+              <p class="trainer-spec">International Gymnastic Master • Fascial Tension & Planche Master</p>
+              <div class="trainer-stats-row">
+                <span>Athletes Coached: <strong>620+</strong></span>
+                <span>Experience: <strong>9 Yrs</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trainer 3: Marcus Cole -->
+          <div class="trainer-card" data-index="2">
+            <img src="assets/images/trainer_marcus.jpg" alt="Coach Marcus Cole" class="trainer-img" loading="lazy" decoding="async">
+            <div class="trainer-info-overlay">
+              <span class="trainer-role-badge">PRO HYPERTROPHY</span>
+              <h3 class="trainer-name">Marcus Cole</h3>
+              <p class="trainer-spec">IFBB Pro Bodybuilder • Mechanical Volume & Metabolic Recomp</p>
+              <div class="trainer-stats-row">
+                <span>Athletes Coached: <strong>350+</strong></span>
+                <span>Experience: <strong>14 Yrs</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Trainer 4: Sophia Sterling -->
+          <div class="trainer-card" data-index="3">
+            <img src="assets/images/trainer_sophia.jpg" alt="Coach Sophia Sterling" class="trainer-img" loading="lazy" decoding="async">
+            <div class="trainer-info-overlay">
+              <span class="trainer-role-badge">VO2 METABOLIC PEAK</span>
+              <h3 class="trainer-name">Sophia Sterling</h3>
+              <p class="trainer-spec">Ironman Triathlete • Aerobic Threshold & High-Velocity Sprint Conditioning</p>
+              <div class="trainer-stats-row">
+                <span>Athletes Coached: <strong>510+</strong></span>
+                <span>Experience: <strong>8 Yrs</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel Navigation Controls -->
+      <div class="carousel-controls">
+        <button class="carousel-nav-btn" id="carousel-prev" aria-label="Previous Trainer">‹</button>
+        <div class="carousel-dots" id="carousel-dots"></div>
+        <button class="carousel-nav-btn" id="carousel-next" aria-label="Next Trainer">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 6: INTERACTIVE VIP MACRO & CALORIE CALCULATOR
+       ================================================================= -->
+  <section class="section-padding" id="calculator" style="background: rgba(10, 10, 12, 0.6);">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">METABOLIC LAB</div>
+        <h2 class="section-title">CALCULATE YOUR <span class="text-lime">DAILY FUEL</span></h2>
+        <p class="section-desc">
+          Precision daily macro calculation powered by athletic expenditure modeling. Tailored to your body composition goals.
+        </p>
+      </div>
+
+      <div class="calculator-card">
+        <!-- Input Controls -->
+        <div class="calc-inputs-col">
+          <div class="calc-input-group">
+            <div class="calc-label">
+              <span>Body Weight</span>
+              <span class="font-mono text-lime" id="calc-weight-val">75 kg</span>
+            </div>
+            <input type="range" class="calc-range-slider" id="calc-weight-slider" min="45" max="135" value="75" step="1">
+          </div>
+
+          <div class="calc-input-group">
+            <div class="calc-label">
+              <span>Weekly Training Frequency</span>
+              <span class="font-mono text-cyan" id="calc-days-val">4 days/wk</span>
+            </div>
+            <input type="range" class="calc-range-slider" id="calc-days-slider" min="1" max="7" value="4" step="1">
+          </div>
+
+          <div class="calc-input-group">
+            <div class="calc-label">
+              <span>Primary Athletic Goal</span>
+            </div>
+            <div class="calc-goal-pills">
+              <button class="calc-goal-btn" data-goal="cut">FAT INCINERATION (-500)</button>
+              <button class="calc-goal-btn active" data-goal="recomp">BODY RECOMP</button>
+              <button class="calc-goal-btn" data-goal="bulk">MASS HYPERTROPHY (+450)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculated Results Box -->
+        <div class="calc-results-box">
+          <div class="calc-total-cal-display">
+            <div class="calc-cal-number" id="result-calories">2,420</div>
+            <div class="calc-cal-label">RECOMMENDED DAILY KCAL INTAKE</div>
+          </div>
+
+          <div class="calc-macro-breakdown">
+            <div class="calc-macro-tile">
+              <div class="macro-grams text-lime" id="result-protein">165g</div>
+              <div class="macro-name">Protein (4cal/g)</div>
+            </div>
+            <div class="calc-macro-tile">
+              <div class="macro-grams text-cyan" id="result-carbs">245g</div>
+              <div class="macro-name">Carbs (4cal/g)</div>
+            </div>
+            <div class="calc-macro-tile">
+              <div class="macro-grams" style="color: #ffaa00;" id="result-fats">68g</div>
+              <div class="macro-name">Healthy Fats (9cal/g)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 7: MEMBER TRANSFORMATIONS & TESTIMONIALS
+       ================================================================= -->
+  <section class="section-padding" id="testimonials">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-tag">VERIFIED PROOF</div>
+        <h2 class="section-title">ELITE <span class="text-lime">TRANSFORMATIONS</span></h2>
+        <p class="section-desc">
+          Real athletes, quantified improvements, and life-altering performance shifts.
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="test-stars">★★★★★</div>
+            <div class="test-metric-badge">⚡ -12.4 KG FAT • +6.2 KG LEAN MUSCLE</div>
+            <p class="test-quote">
+              "Fire Fitness Chandi me join karne ke baad meri strength aur physique ka level bilkul badal gaya. Sonu Raj Patel sir ke personal guidance aur diet plan se 16 weeks me meri deadlift 80kg se 180kg pahunch gayi bina kisi joint pain ke. Nalanda ka best gym!"
+            </p>
+          </div>
+          <div class="test-author-row">
+            <img src="assets/images/member_1.jpg" alt="Rahul Kumar" class="test-avatar" loading="lazy" decoding="async">
+            <div>
+              <div class="test-name">Rahul Kumar</div>
+              <div class="test-role">Chandi (Nalanda) • 16-Week Muscle Protocol</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="test-stars">★★★★★</div>
+            <div class="test-metric-badge">🔥 -14.5 KG FAT LOSS • 100% STAMINA BOOST</div>
+            <p class="test-quote">
+              "Chandi me Referral Hospital ke samne itna high-tech aur safe environment gym hum sabke liye best hai. High-velocity cardio aur proper training se maine 3 mahine me 14kg fat loss kiya. Cleanliness aur vibes unmatched hain."
+            </p>
+          </div>
+          <div class="test-author-row">
+            <img src="assets/images/member_2.jpg" alt="Priya Kumari" class="test-avatar" loading="lazy" decoding="async">
+            <div>
+              <div class="test-name">Priya Kumari</div>
+              <div class="test-role">Chandi, Nalanda • Fat Loss &amp; Conditioning</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div>
+            <div class="test-stars">★★★★★</div>
+            <div class="test-metric-badge">💪 WEIGHTED DIPS &amp; STRICT PULL-UPS UNLOCKED</div>
+            <p class="test-quote">
+              "Commercial gyms me 2 saal se plateau pe tha. Fire Fitness me Coach Sonu sir ke strict calisthenics aur progressive overload system se mera strict muscle-up aur weighted dips unlock hua. Best training facility in Nalanda district!"
+            </p>
+          </div>
+          <div class="test-author-row">
+            <img src="assets/images/member_3.jpg" alt="Vikash Patel" class="test-avatar" loading="lazy" decoding="async">
+            <div>
+              <div class="test-name">Vikash Patel</div>
+              <div class="test-role">Bihar Sharif (Nalanda) • Calisthenics Division</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================================================================
+       SECTION 8: VIP CTA BANNER & CYBER FOOTER
+       ================================================================= -->
+  <section class="cta-banner-section" id="join">
+    <div class="container">
+      <div class="cta-banner-card">
+        <div class="section-tag" style="background: rgba(204, 255, 0, 0.15); border-color: #ccff00;">YOUR JOURNEY STARTS HERE</div>
+        <h2 class="cta-banner-title">CONNECT. ENGAGE.<br><span class="text-lime">TRANSFORM.</span></h2>
+        <p class="cta-banner-desc">
+          Secure your exclusive 1-Day Obsidian Pass. Full access to biometric pods, cryotherapy plunge, and coach onboarding.
+        </p>
+
+        <form class="cta-input-group" id="footer-cta-form">
+          <input type="email" class="cta-email-input" placeholder="Enter your athlete email..." required>
+          <button type="submit" class="btn-neon">
+            JOIN NOW &gt;&gt;&gt;
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#" class="brand-logo" style="margin-bottom: 16px;">
+            <span class="brand-badge">🔥</span>
+            <span>FIRE FITNESS<span class="text-lime font-mono"> // </span>ELITE</span>
+          </a>
+          <p class="footer-brand-desc">
+            The world's premier cybernetic luxury fitness sanctuary. Merging human potential with biometric engineering and fiery architectural elegance.
+          </p>
+          <div class="footer-live-status">
+            <span class="active-pulse-dot"></span>
+            <span>FACILITY OPEN 24/7 • 48 ATHLETES ON-SITE</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">PROGRAMS</h4>
+          <ul class="footer-links-list">
+            <li><a href="#programs" class="footer-link">Barbell Basics</a></li>
+            <li><a href="#programs" class="footer-link">Kettlebell Masterclass</a></li>
+            <li><a href="#programs" class="footer-link">Cardio Power Boost</a></li>
+            <li><a href="#programs" class="footer-link">Calisthenics Division</a></li>
+            <li><a href="#programs" class="footer-link">Hypertrophy Division</a></li>
+            <li><a href="#programs" class="footer-link">HIIT Velocity</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">SANCTUARY</h4>
+          <ul class="footer-links-list">
+            <li><a href="#why-us" class="footer-link">Why Choose Us</a></li>
+            <li><a href="#biometrics" class="footer-link">Live Telemetry</a></li>
+            <li><a href="#trainers" class="footer-link">Elite Trainers</a></li>
+            <li><a href="#calculator" class="footer-link">Macro Calculator</a></li>
+            <li><a href="#testimonials" class="footer-link">Transformations</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">LOCATION & ACCESS</h4>
+          <p style="font-size: 0.9rem; color: #d4cfd2; line-height: 1.6; margin-bottom: 14px;">
+            Opposite Referral Hospital, Chandi<br>
+            Nalanda, Bihar Sharif — 803108
+          </p>
+          <p style="font-family: var(--font-mono); font-size: 0.92rem; margin-bottom: 8px;">
+            <a href="tel:+917857895996" style="color: #ff2a00; text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+              <span>📞</span> +91 78578 95996
+            </a>
+          </p>
+          <p style="font-size: 0.82rem;">
+            <a href="https://wa.me/917857895996?text=Hi%20Fire%20Fitness%2C%20I%20want%20to%20know%20more%20about%20membership" target="_blank" rel="noopener noreferrer" style="color: #ff7700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
+              <span>💬</span> WhatsApp Direct Enquiry
+            </a>
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>
+          &copy; 2026 FIRE FITNESS Inc. All rights reserved.
+        </div>
+        <div style="display: flex; gap: 24px;">
+          <a href="#" class="footer-link">Privacy Protocol</a>
+          <a href="#" class="footer-link">Terms of Service</a>
+          <a href="#" class="footer-link">Member Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =================================================================
+       MODAL 1: VIP 1-DAY PASS CLAIM MODAL
+       ================================================================= -->
+  <div class="modal-overlay" id="vip-pass-modal" role="dialog" aria-modal="true" aria-labelledby="vip-modal-title">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="close-vip-modal-btn" aria-label="Close Modal">&times;</button>
+      <h3 class="modal-title" id="vip-modal-title">CLAIM 1-DAY PASS</h3>
+      <p class="modal-subtitle">
+        Enter your details to generate your digital VIP Guest Pass for complimentary full facility access.
+      </p>
+
+      <form id="vip-claim-form">
+        <div class="modal-form-group">
+          <label class="modal-form-label" for="vip-name-input">Full Name</label>
+          <input type="text" id="vip-name-input" class="modal-form-input" placeholder="e.g. Rahul Kumar" required>
+        </div>
+
+        <div class="modal-form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <label class="modal-form-label" for="vip-phone-input" style="margin-bottom: 0;">Mobile Number (WhatsApp)</label>
+            <span id="phone-digit-badge" style="font-size: 0.72rem; font-weight: 700; color: #ff5533; font-family: monospace; letter-spacing: 0.5px;">0/10 Digits</span>
+          </div>
+          <input 
+            type="tel" 
+            id="vip-phone-input" 
+            class="modal-form-input" 
+            placeholder="Enter 10-digit number (e.g. 7857895996)" 
+            maxlength="10" 
+            minlength="10" 
+            inputmode="numeric" 
+            pattern="[0-9]{10}" 
+            title="Kripya exact 10 digit ka mobile number dalein" 
+            autocomplete="tel"
+            required>
+          <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: #888888; margin-top: 5px;">
+            <span>Strictly 10 digits required (10 digit se zyada allow nahi hai)</span>
+          </div>
+        </div>
+
+        <div class="modal-form-group">
+          <label class="modal-form-label" for="vip-email-modal-input">Athlete Email</label>
+          <input type="email" id="vip-email-modal-input" class="modal-form-input" placeholder="e.g. rahul@gmail.com" required>
+        </div>
+
+        <div class="modal-form-group">
+          <label class="modal-form-label" for="vip-goal-select">Primary Training Focus</label>
+          <select id="vip-goal-select" class="modal-form-input" style="cursor: pointer;">
+            <option value="strength">Heavy Strength & Powerlifting</option>
+            <option value="calisthenics">Calisthenics & Relative Strength</option>
+            <option value="hypertrophy">Maximal Muscle Hypertrophy</option>
+            <option value="vo2">Aerobic Conditioning & Cardio</option>
+            <option value="weightloss">Fat Loss & General Fitness</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-neon" style="width: 100%; margin-top: 16px; padding: 16px;">
+          GENERATE VIP GUEST PASS &gt;&gt;&gt;
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- =================================================================
+       MODAL 2: PROGRAM PROTOCOL DEEP-DIVE MODAL
+       ================================================================= -->
+  <div class="modal-overlay" id="protocol-modal" role="dialog" aria-modal="true" aria-labelledby="protocol-title">
+    <div class="modal-card" style="max-width: 600px;">
+      <button class="modal-close-btn" id="close-protocol-modal-btn" aria-label="Close Modal">&times;</button>
+      <span class="section-tag" style="margin-bottom: 10px;">TRAINING PROTOCOL DOSSIER</span>
+      <h3 class="modal-title" id="protocol-title">PROGRAM TITLE</h3>
+      <p class="modal-subtitle" id="protocol-subtitle" style="color: #ccff00; font-family: monospace; font-size: 0.85rem; margin-bottom: 16px;">Subtitle</p>
+
+      <p id="protocol-desc" style="color: #c8cbd0; font-size: 0.95rem; line-height: 1.65; margin-bottom: 24px;">
+        Detailed protocol description goes here.
+      </p>
+
+      <!-- Key Stats Grid -->
+      <div id="protocol-stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 28px;"></div>
+
+      <button class="btn-neon open-vip-modal-btn" style="width: 100%;">
+        ENROLL IN THIS PROTOCOL &gt;&gt;&gt;
+      </button>
+    </div>
+  </div>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/three-scene.js" defer></script>
+  <script src="js/app.js" defer></script>
+</body>
+</html>
