@@ -867,9 +867,9 @@
             </ul>
           </div>
 
-          <a href="https://wa.me/917857895996?text=Hi%20Fire%20Fitness%2C%20I%20want%20to%20join%20the%201%20Month%20Membership%20plan%20(%E2%82%B9500).%20Please%20guide%20me%20with%20slot%20timings." target="_blank" rel="noopener noreferrer" class="btn-outline pricing-btn">
+          <button class="btn-outline pricing-btn open-plan-modal-btn" data-plan="1month">
             JOIN 1 MONTH (₹500) &gt;&gt;&gt;
-          </a>
+          </button>
         </div>
 
         <!-- Plan 2: 3 Months Transformation (Featured / Best Value) -->
@@ -920,9 +920,9 @@
             </ul>
           </div>
 
-          <a href="https://wa.me/917857895996?text=Hi%20Coach%20Sonu%2C%20I%20want%20to%20enroll%20in%20the%203%20Months%20Transformation%20plan%20(%E2%82%B91400).%20Please%20confirm%20my%20slot%20and%20diet%20consultation." target="_blank" rel="noopener noreferrer" class="btn-neon pricing-btn">
+          <button class="btn-neon pricing-btn open-plan-modal-btn" data-plan="3months">
             JOIN 3 MONTHS (₹1,400) &gt;&gt;&gt;
-          </a>
+          </button>
         </div>
 
         <!-- Plan 3: Free 1-Day VIP Pass -->
@@ -969,7 +969,7 @@
             </ul>
           </div>
 
-          <button class="btn-neon pricing-btn open-vip-modal-btn">
+          <button class="btn-neon pricing-btn open-plan-modal-btn" data-plan="vippass">
             CLAIM FREE VIP PASS &gt;&gt;&gt;
           </button>
         </div>
@@ -1200,6 +1200,15 @@
         <div class="modal-form-group">
           <label class="modal-form-label" for="vip-email-modal-input">Athlete Email</label>
           <input type="email" id="vip-email-modal-input" class="modal-form-input" placeholder="e.g. rahul@gmail.com" required>
+        </div>
+
+        <div class="modal-form-group">
+          <label class="modal-form-label" for="vip-plan-select">Selected Membership / Pass</label>
+          <select id="vip-plan-select" class="modal-form-input" style="cursor: pointer; font-weight: 700; color: #ff7700; border-color: rgba(255, 42, 0, 0.4);">
+            <option value="1month">1 Month Membership — ₹500</option>
+            <option value="3months">3 Months Transformation — ₹1,400 (Best Value)</option>
+            <option value="vippass">1-Day Free VIP Guest Pass — ₹0</option>
+          </select>
         </div>
 
         <div class="modal-form-group">

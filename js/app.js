@@ -542,19 +542,50 @@ document.addEventListener('DOMContentLoaded', () => {
   calculateMacros();
 
   // ==========================================
-  // 9. VIP 1-DAY PASS CLAIM MODAL & CONFETTI
+  // 9. MEMBERSHIP & VIP PASS CLAIM MODAL & CONFETTI
   // ==========================================
   const vipModal = document.getElementById('vip-pass-modal');
-  const openVipBtns = document.querySelectorAll('.open-vip-modal-btn');
-  const closeVipBtn = document.getElementById('close-vip-modal-btn');
-  const vipForm = document.getElementById('vip-claim-form');
+  const modalBodyCard = vipModal ? vipModal.querySelector('.modal-card') : null;
+  const initialModalContent = modalBodyCard ? modalBodyCard.innerHTML : '';
 
-  function openModal() {
+  function updateModalForPlan(planKey) {
+    const modalTitle = document.getElementById('vip-modal-title');
+    const modalSubtitle = vipModal ? vipModal.querySelector('.modal-subtitle') : null;
+    const submitBtn = vipModal ? vipModal.querySelector('#vip-claim-form button[type="submit"]') : null;
+
+    if (planKey === '1month') {
+      if (modalTitle) modalTitle.textContent = 'ENROLL: 1 MONTH PASS';
+      if (modalSubtitle) modalSubtitle.textContent = 'Enter your athlete details to register for 1-Month Membership (₹500).';
+      if (submitBtn) submitBtn.innerHTML = 'CONFIRM 1-MONTH PASS (₹500) &gt;&gt;&gt;';
+    } else if (planKey === '3months') {
+      if (modalTitle) modalTitle.textContent = 'ENROLL: 3 MONTHS PASS';
+      if (modalSubtitle) modalSubtitle.textContent = 'Enter your athlete details to register for 3-Months Transformation Plan (₹1,400).';
+      if (submitBtn) submitBtn.innerHTML = 'CONFIRM 3-MONTHS PASS (₹1,400) &gt;&gt;&gt;';
+    } else {
+      if (modalTitle) modalTitle.textContent = 'CLAIM 1-DAY PASS';
+      if (modalSubtitle) modalSubtitle.textContent = 'Enter your details to generate your digital VIP Guest Pass for complimentary full facility access.';
+      if (submitBtn) submitBtn.innerHTML = 'GENERATE VIP GUEST PASS &gt;&gt;&gt;';
+    }
+  }
+
+  function openModal(planKey = 'vippass') {
     const protoModal = document.getElementById('protocol-modal');
     if (protoModal && protoModal.classList.contains('is-open')) {
       protoModal.classList.remove('is-open');
     }
-    if (vipModal) {
+    if (vipModal && modalBodyCard) {
+      // If modal was previously showing confirmation screen, restore original form
+      if (!modalBodyCard.querySelector('#vip-claim-form')) {
+        modalBodyCard.innerHTML = initialModalContent;
+        initModalFormEvents();
+      }
+
+      const planSelect = document.getElementById('vip-plan-select');
+      if (planSelect) {
+        planSelect.value = planKey;
+      }
+      updateModalForPlan(planKey);
+
       vipModal.classList.add('is-open');
       document.body.style.overflow = 'hidden';
     }
@@ -567,131 +598,172 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  openVipBtns.forEach((btn) => btn.addEventListener('click', openModal));
-  if (closeVipBtn) closeVipBtn.addEventListener('click', closeModal);
+  function initModalFormEvents() {
+    const closeBtn = document.getElementById('close-vip-modal-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', closeModal);
+    }
 
-  if (vipModal) {
-    vipModal.addEventListener('click', (e) => {
-      if (e.target === vipModal) closeModal();
-    });
-  }
+    const planSelect = document.getElementById('vip-plan-select');
+    if (planSelect) {
+      planSelect.addEventListener('change', () => {
+        updateModalForPlan(planSelect.value);
+      });
+    }
 
-  // Strict 10-digit numeric restriction for phone input
-  const vipPhoneInput = document.getElementById('vip-phone-input');
-  if (vipPhoneInput) {
-    const syncPhoneState = () => {
-      vipPhoneInput.value = vipPhoneInput.value.replace(/\D/g, '').slice(0, 10);
-      const badge = document.getElementById('phone-digit-badge');
-      if (badge) {
-        badge.textContent = `${vipPhoneInput.value.length}/10 Digits`;
-        badge.style.color = vipPhoneInput.value.length === 10 ? '#25d366' : '#ff5533';
-      }
-    };
+    // Strict 10-digit numeric restriction for phone input
+    const vipPhoneInput = document.getElementById('vip-phone-input');
+    if (vipPhoneInput) {
+      const syncPhoneState = () => {
+        vipPhoneInput.value = vipPhoneInput.value.replace(/\D/g, '').slice(0, 10);
+        const badge = document.getElementById('phone-digit-badge');
+        if (badge) {
+          badge.textContent = `${vipPhoneInput.value.length}/10 Digits`;
+          badge.style.color = vipPhoneInput.value.length === 10 ? '#25d366' : '#ff5533';
+        }
+      };
 
-    vipPhoneInput.addEventListener('input', syncPhoneState);
-    vipPhoneInput.addEventListener('paste', () => setTimeout(syncPhoneState, 0));
-    vipPhoneInput.addEventListener('keypress', (e) => {
-      // Strictly allow 0-9 digits only (replaces inline HTML handler cleanly)
-      if (!/[0-9]/.test(e.key) && e.key !== 'Enter') {
+      vipPhoneInput.addEventListener('input', syncPhoneState);
+      vipPhoneInput.addEventListener('paste', () => setTimeout(syncPhoneState, 0));
+      vipPhoneInput.addEventListener('keypress', (e) => {
+        if (!/[0-9]/.test(e.key) && e.key !== 'Enter') {
+          e.preventDefault();
+        }
+      });
+      vipPhoneInput.addEventListener('keydown', (e) => {
+        const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'];
+        if (vipPhoneInput.value.length >= 10 && !allowedKeys.includes(e.key) && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+        }
+      });
+    }
+
+    const form = document.getElementById('vip-claim-form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
         e.preventDefault();
-      }
-    });
-    vipPhoneInput.addEventListener('keydown', (e) => {
-      const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'];
-      if (vipPhoneInput.value.length >= 10 && !allowedKeys.includes(e.key) && !e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-      }
-    });
-  }
+        const phoneInput = document.getElementById('vip-phone-input');
+        const phoneRaw = phoneInput?.value.trim() || '';
+        const phoneDigits = phoneRaw.replace(/\D/g, '');
 
-  // Trigger Confetti Celebration & WhatsApp Redirect on pass submission
-  if (vipForm) {
-    vipForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const phoneInput = document.getElementById('vip-phone-input');
-      const phoneRaw = phoneInput?.value.trim() || '';
-      const phoneDigits = phoneRaw.replace(/\D/g, '');
+        if (phoneDigits.length !== 10) {
+          alert('Kripya karke valid 10-digit mobile number enter karein!');
+          phoneInput?.focus();
+          return;
+        }
 
-      if (phoneDigits.length !== 10) {
-        alert('Kripya karke valid 10-digit mobile number enter karein!');
-        phoneInput?.focus();
-        return;
-      }
+        const name = document.getElementById('vip-name-input')?.value.trim() || 'Athlete';
+        const phone = phoneDigits;
+        const email = document.getElementById('vip-email-modal-input')?.value.trim() || 'Not Provided';
+        const planEl = document.getElementById('vip-plan-select');
+        const planVal = planEl ? planEl.value : 'vippass';
+        const planText = planEl ? planEl.options[planEl.selectedIndex].text : '1-Day Free VIP Pass';
+        const isPaid = planVal === '1month' || planVal === '3months';
+        const goalSelect = document.getElementById('vip-goal-select');
+        const goalText = goalSelect ? goalSelect.options[goalSelect.selectedIndex].text : 'General Fitness';
+        const passId = (isPaid ? 'FIRE-MEM-' : 'FIRE-VIP-') + Math.floor(100000 + Math.random() * 900000);
 
-      const name = document.getElementById('vip-name-input')?.value.trim() || 'Athlete';
-      const phone = phoneDigits;
-      const email = document.getElementById('vip-email-modal-input')?.value.trim() || 'Not Provided';
-      const goalSelect = document.getElementById('vip-goal-select');
-      const goalText = goalSelect ? goalSelect.options[goalSelect.selectedIndex].text : 'General Fitness';
-      const passId = 'FIRE-VIP-' + Math.floor(100000 + Math.random() * 900000);
+        sfx.celebrate();
+        triggerConfetti();
 
-      sfx.celebrate();
-      triggerConfetti();
-
-      // Format WhatsApp message with rich text and emojis
-      const waMessage = 
-`🔥 *FIRE FITNESS // NEW VIP PASS BOOKING* 🔥
+        // Format WhatsApp message with rich text and emojis
+        const waMessage = isPaid
+          ? `🔥 *FIRE FITNESS // MEMBERSHIP REGISTRATION* 🔥
 ━━━━━━━━━━━━━━━━━━━━━━
 👤 *Full Name:* ${name}
 📱 *Phone Number:* ${phone}
 📧 *Email Address:* ${email}
+💳 *Selected Plan:* ${planText}
 🎯 *Training Focus:* ${goalText}
+🎫 *Booking ID:* ${passId}
+📍 *Gym Branch:* Opposite Referral Hospital, Chandi, Nalanda (803108)
+━━━━━━━━━━━━━━━━━━━━━━
+💬 *Message:* Hello Coach Sonu! I want to confirm my membership registration for *${planText}* at Fire Fitness Chandi. Please confirm my workout slot and payment details. Thank you! 🏋️‍♂️⚡`
+          : `🔥 *FIRE FITNESS // NEW VIP PASS BOOKING* 🔥
+━━━━━━━━━━━━━━━━━━━━━━
+👤 *Full Name:* ${name}
+📱 *Phone Number:* ${phone}
+📧 *Email Address:* ${email}
 🎫 *Pass ID:* ${passId}
+🎯 *Training Focus:* ${goalText}
 📍 *Gym Branch:* Opposite Referral Hospital, Chandi, Nalanda (803108)
 ━━━━━━━━━━━━━━━━━━━━━━
 💬 *Message:* Hello Fire Fitness! I just claimed my 1-Day VIP Guest Pass on your official website. Please confirm my workout slot and timing. Thank you! 🏋️‍♂️⚡`;
 
-      const gymNumber = '917857895996';
-      const encodedText = encodeURIComponent(waMessage);
+        const gymNumber = '917857895996';
+        const encodedText = encodeURIComponent(waMessage);
 
-      // Detect Mobile vs Laptop / Computer
-      const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-      
-      // WhatsApp Web for Laptop/PC, WhatsApp App for Mobile devices
-      const whatsappUrl = isMobile 
-        ? `https://api.whatsapp.com/send?phone=${gymNumber}&text=${encodedText}`
-        : `https://web.whatsapp.com/send?phone=${gymNumber}&text=${encodedText}`;
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const whatsappUrl = isMobile 
+          ? `https://api.whatsapp.com/send?phone=${gymNumber}&text=${encodedText}`
+          : `https://web.whatsapp.com/send?phone=${gymNumber}&text=${encodedText}`;
 
-      // Automatically trigger WhatsApp window
-      try {
-        window.open(whatsappUrl, '_blank');
-      } catch (err) {
-        console.log('Auto popup blocked; fallback button provided.');
-      }
+        try {
+          window.open(whatsappUrl, '_blank');
+        } catch (err) {
+          console.log('Auto popup blocked; fallback button provided.');
+        }
 
-      // Show instant confirmation inside modal
-      const modalBody = vipModal.querySelector('.modal-card');
-      if (modalBody) {
-        modalBody.innerHTML = `
-          <div style="text-align: center; padding: 8px 0;">
-            <div style="width: 65px; height: 65px; border-radius: 50%; background: #ff2a00; color: #ffffff; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.8rem; box-shadow: 0 0 30px rgba(255,42,0,0.6);">
-              ✓
+        // Show confirmation inside modal
+        if (modalBodyCard) {
+          modalBodyCard.innerHTML = `
+            <div style="text-align: center; padding: 8px 0;">
+              <div style="width: 65px; height: 65px; border-radius: 50%; background: #ff2a00; color: #ffffff; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.8rem; box-shadow: 0 0 30px rgba(255,42,0,0.6);">
+                ✓
+              </div>
+              <h3 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 8px;">
+                ${isPaid ? 'REGISTRATION CONFIRMED' : 'VIP PASS ACTIVATED'}
+              </h3>
+              <p style="color: #c8cbd0; font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px;">
+                Welcome, <strong>${name}</strong>! Your registration for <strong>${planText}</strong> has been generated and is ready to send to Coach Sonu.
+              </p>
+
+              <div style="background: rgba(255,42,0,0.08); border: 1px dashed #ff2a00; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 18px; font-size: 0.85rem; color: #d4cfd2; line-height: 1.6;">
+                <div><strong>Booking ID:</strong> <span style="font-family: monospace; color: #ff3311; font-weight: 700;">${passId}</span></div>
+                <div><strong>Plan:</strong> <span style="color: #ffaa00; font-weight: 700;">${planText}</span></div>
+                <div><strong>Name:</strong> ${name}</div>
+                <div><strong>Mobile:</strong> ${phone}</div>
+                <div><strong>Email:</strong> ${email}</div>
+                <div><strong>Goal:</strong> ${goalText}</div>
+              </div>
+
+              <!-- Direct One-Click WhatsApp Trigger Button -->
+              <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-neon" style="width: 100%; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 0 25px rgba(37, 211, 102, 0.4); margin-bottom: 12px; padding: 14px; font-size: 0.95rem;">
+                <span>💬</span> SEND ON WHATSAPP &gt;&gt;&gt;
+              </a>
+
+              <button class="btn-outline" id="close-confirmed-btn" style="width: 100%; padding: 10px; font-size: 0.85rem; border-color: rgba(255,255,255,0.15);">
+                Close Window
+              </button>
             </div>
-            <h3 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: #fff; margin-bottom: 8px;">VIP PASS ACTIVATED</h3>
-            <p style="color: #c8cbd0; font-size: 0.9rem; line-height: 1.5; margin-bottom: 16px;">
-              Welcome, <strong>${name}</strong>! Your pass has been generated and ready to send to Fire Fitness.
-            </p>
+          `;
+          document.getElementById('close-confirmed-btn')?.addEventListener('click', closeModal);
+        }
+      });
+    }
+  }
 
-            <div style="background: rgba(255,42,0,0.08); border: 1px dashed #ff2a00; border-radius: 12px; padding: 14px; text-align: left; margin-bottom: 18px; font-size: 0.85rem; color: #d4cfd2; line-height: 1.6;">
-              <div><strong>Pass ID:</strong> <span style="font-family: monospace; color: #ff3311; font-weight: 700;">${passId}</span></div>
-              <div><strong>Name:</strong> ${name}</div>
-              <div><strong>Mobile:</strong> ${phone}</div>
-              <div><strong>Email:</strong> ${email}</div>
-              <div><strong>Goal:</strong> ${goalText}</div>
-            </div>
+  // Initial event bindings
+  initModalFormEvents();
 
-            <!-- Direct One-Click WhatsApp Trigger Button -->
-            <a href="${whatsappUrl}" target="_blank" rel="noopener noreferrer" class="btn-neon" style="width: 100%; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 0 25px rgba(37, 211, 102, 0.4); margin-bottom: 12px; padding: 14px; font-size: 0.95rem;">
-              <span>💬</span> SEND ON WHATSAPP &gt;&gt;&gt;
-            </a>
+  // Pricing cards & VIP trigger buttons (delegated listener)
+  document.addEventListener('click', (e) => {
+    const planBtn = e.target.closest('.open-plan-modal-btn');
+    if (planBtn) {
+      const plan = planBtn.getAttribute('data-plan') || 'vippass';
+      openModal(plan);
+      return;
+    }
+    const vipBtn = e.target.closest('.open-vip-modal-btn');
+    if (vipBtn) {
+      openModal('vippass');
+      return;
+    }
+  });
 
-            <button class="btn-outline" id="close-confirmed-btn" style="width: 100%; padding: 10px; font-size: 0.85rem; border-color: rgba(255,255,255,0.15);">
-              Close Window
-            </button>
-          </div>
-        `;
-        document.getElementById('close-confirmed-btn')?.addEventListener('click', closeModal);
-      }
+  if (vipModal) {
+    vipModal.addEventListener('click', (e) => {
+      if (e.target === vipModal) closeModal();
     });
   }
 
