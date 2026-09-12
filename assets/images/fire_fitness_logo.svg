@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <!-- Background Shield Magma Gradient -->
+    <linearGradient id="ff-shield-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f090d" />
+      <stop offset="50%" stop-color="#120508" />
+      <stop offset="100%" stop-color="#080204" />
+    </linearGradient>
+
+    <!-- Border Glow Gradient -->
+    <linearGradient id="ff-border-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff3b00" />
+      <stop offset="50%" stop-color="#ff1100" />
+      <stop offset="100%" stop-color="#ff7700" />
+    </linearGradient>
+
+    <!-- Main Fire Flame Gradient -->
+    <linearGradient id="ff-flame-main" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#d60024" />
+      <stop offset="35%" stop-color="#ff2600" />
+      <stop offset="70%" stop-color="#ff7b00" />
+      <stop offset="92%" stop-color="#ffcc00" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <!-- Secondary Flame Wings Gradient -->
+    <linearGradient id="ff-flame-wings" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#8a0014" />
+      <stop offset="50%" stop-color="#e61e00" />
+      <stop offset="100%" stop-color="#ff6600" />
+    </linearGradient>
+
+    <!-- Chrome Barbell Gradient -->
+    <linearGradient id="ff-chrome-bar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="25%" stop-color="#d1d5db" />
+      <stop offset="60%" stop-color="#4b5563" />
+      <stop offset="100%" stop-color="#1f2937" />
+    </linearGradient>
+
+    <!-- Weight Plate Iron Gradient -->
+    <linearGradient id="ff-iron-plate" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#374151" />
+      <stop offset="50%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+
+    <!-- Neon Flame Aura Filter -->
+    <filter id="ff-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Cyber Hex Shield -->
+  <polygon points="60,6 106,26 106,84 60,114 14,84 14,26" fill="url(#ff-shield-grad)" stroke="url(#ff-border-grad)" stroke-width="3" stroke-linejoin="round" />
+
+  <!-- Inner Subtle Inset Rim -->
+  <polygon points="60,13 100,30 100,80 60,107 20,80 20,30" fill="none" stroke="rgba(255, 60, 0, 0.25)" stroke-width="1.2" />
+
+  <!-- Heavy Steel Barbell Shaft -->
+  <rect x="22" y="65" width="76" height="8" rx="2" fill="url(#ff-chrome-bar)" stroke="#09090b" stroke-width="0.8" />
+  
+  <!-- Barbell Knurling Texture Accents -->
+  <line x1="43" y1="65" x2="43" y2="73" stroke="#222" stroke-width="1.2" />
+  <line x1="47" y1="65" x2="47" y2="73" stroke="#222" stroke-width="1.2" />
+  <line x1="73" y1="65" x2="73" y2="73" stroke="#222" stroke-width="1.2" />
+  <line x1="77" y1="65" x2="77" y2="73" stroke="#222" stroke-width="1.2" />
+
+  <!-- Left Cast-Iron Olympic Plates -->
+  <rect x="28" y="50" width="6" height="38" rx="2" fill="url(#ff-iron-plate)" stroke="#ff2a00" stroke-width="1.2" />
+  <rect x="21" y="54" width="5" height="30" rx="1.5" fill="url(#ff-iron-plate)" stroke="#ff6600" stroke-width="0.8" />
+
+  <!-- Right Cast-Iron Olympic Plates -->
+  <rect x="86" y="50" width="6" height="38" rx="2" fill="url(#ff-iron-plate)" stroke="#ff2a00" stroke-width="1.2" />
+  <rect x="94" y="54" width="5" height="30" rx="1.5" fill="url(#ff-iron-plate)" stroke="#ff6600" stroke-width="0.8" />
+
+  <!-- Dynamic Cyber Flame Wings (Left & Right) -->
+  <!-- Left Flame Feather -->
+  <path d="M 60,94 C 50,90 34,80 32,60 C 32,48 40,40 44,38 C 42,46 46,50 49,49 C 47,38 52,26 60,16 C 56,29 60,36 56,43 C 54,46 51,49 54,54 C 57,59 60,65 60,94 Z" fill="url(#ff-flame-wings)" opacity="0.95" />
+  <!-- Right Flame Feather -->
+  <path d="M 60,94 C 70,90 86,80 88,60 C 88,48 80,40 76,38 C 78,46 74,50 71,49 C 73,38 68,26 60,16 C 64,29 60,36 64,43 C 66,46 69,49 66,54 C 63,59 60,65 60,94 Z" fill="url(#ff-flame-wings)" opacity="0.95" />
+
+  <!-- Central Blazing Fire Crown (Glowing) -->
+  <path d="M 60,16 C 65,30 75,40 72,56 C 70,68 60,88 60,88 C 60,88 50,68 48,56 C 45,40 55,30 60,16 Z" fill="url(#ff-flame-main)" filter="url(#ff-glow)" />
+
+  <!-- Super-Intense White Hot Molten Energy Heart -->
+  <path d="M 60,42 C 63,50 66,58 63,67 C 62,73 60,81 60,81 C 60,81 58,73 57,67 C 54,58 57,50 60,42 Z" fill="#ffffff" opacity="0.95" />
+
+  <!-- Small Ember Sparks -->
+  <circle cx="48" cy="22" r="1.8" fill="#ffcc00" />
+  <circle cx="72" cy="24" r="1.5" fill="#ff9900" />
+  <circle cx="60" cy="11" r="1.4" fill="#ffffff" />
+</svg>
