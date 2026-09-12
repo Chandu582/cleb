@@ -542,6 +542,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const vipForm = document.getElementById('vip-claim-form');
 
   function openModal() {
+    const protoModal = document.getElementById('protocol-modal');
+    if (protoModal && protoModal.classList.contains('is-open')) {
+      protoModal.classList.remove('is-open');
+    }
     if (vipModal) {
       vipModal.classList.add('is-open');
       document.body.style.overflow = 'hidden';
@@ -793,9 +797,9 @@ document.addEventListener('DOMContentLoaded', () => {
           statsWrap.innerHTML = data.stats
             .map(
               (s) => `
-              <div style="background: rgba(18, 14, 18, 0.85); border: 1px solid rgba(255, 42, 0, 0.2); padding: 14px; border-radius: 12px; text-align: center;">
-                <div style="font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; color: #ff2a00;">${s.val}</div>
-                <div style="font-size: 0.72rem; color: #71717a; text-transform: uppercase; margin-top: 4px;">${s.label}</div>
+              <div class="protocol-stat-item">
+                <div class="protocol-stat-val">${s.val}</div>
+                <div class="protocol-stat-label">${s.label}</div>
               </div>
             `
             )
