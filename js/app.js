@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Clicking any nav link closes menu
     navLinks.querySelectorAll('.nav-link').forEach((link) => {
       link.addEventListener('click', () => {
-        if (window.innerWidth <= 768) {
+        if (navLinks.classList.contains('is-open')) {
           closeMobileMenu();
         }
       });

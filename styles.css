@@ -198,17 +198,19 @@ body {
   text-decoration: none;
   color: var(--text-white);
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: -0.02em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .brand-logo-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   overflow: hidden;
   background: #0d0709;
@@ -257,19 +259,20 @@ body {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: clamp(11px, 1.3vw, 22px);
   list-style: none;
 }
 
 .nav-link {
   color: var(--text-silver);
   text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.86rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
+  white-space: nowrap;
   transition: var(--transition-smooth);
   position: relative;
-  padding: 4px 0;
+  padding: 6px 3px;
 }
 
 .nav-link::after {
@@ -292,10 +295,143 @@ body {
   width: 100%;
 }
 
+/* Hide mobile-only direct items on desktop */
+.mobile-only-item {
+  display: none;
+}
+
+/* Desktop Dropdown for Specialized Labs */
+.nav-item-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.dropdown-chevron {
+  font-size: 0.65rem;
+  color: #ff5500;
+  transition: transform 0.25s ease;
+}
+
+.nav-item-dropdown:hover .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: rgba(14, 11, 13, 0.97);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-lime);
+  border-radius: 14px;
+  padding: 8px;
+  min-width: 225px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 42, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1010;
+}
+
+.nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: rgba(14, 11, 13, 0.97);
+  border-top: 1px solid var(--border-lime);
+  border-left: 1px solid var(--border-lime);
+}
+
+.nav-item-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 9px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.nav-dropdown-item:hover {
+  background: rgba(255, 42, 0, 0.14);
+  transform: translateX(3px);
+}
+
+.dropdown-item-icon {
+  font-size: 1.1rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 42, 0, 0.15);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 42, 0, 0.35);
+  flex-shrink: 0;
+}
+
+.dropdown-item-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item-title {
+  color: var(--text-white);
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dropdown-item-desc {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  margin-top: 2px;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.btn-neon.nav-cta {
+  padding: 8px 18px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  box-shadow: 0 0 16px rgba(255, 42, 0, 0.45);
+}
+
+.btn-neon.nav-cta:hover {
+  box-shadow: 0 0 24px rgba(255, 60, 0, 0.75);
 }
 
 /* Audio SFX Toggle Button */
@@ -303,14 +439,15 @@ body {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-subtle);
   color: var(--text-silver);
-  padding: 8px 12px;
+  padding: 7px 11px;
   border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-family: var(--font-mono);
   cursor: pointer;
+  white-space: nowrap;
   transition: var(--transition-smooth);
 }
 
@@ -2571,6 +2708,33 @@ body {
 /* ==========================================================================
    RESPONSIVE BREAKPOINTS
    ========================================================================== */
+@media (max-width: 1240px) {
+  .nav-links {
+    gap: clamp(10px, 1.2vw, 16px);
+  }
+  .nav-link {
+    font-size: 0.83rem;
+  }
+  .brand-logo {
+    font-size: 1.12rem;
+    gap: 8px;
+  }
+  .brand-logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .btn-neon.nav-cta {
+    padding: 7px 15px;
+    font-size: 0.81rem;
+  }
+}
+
+@media (max-width: 1040px) {
+  .sfx-toggle {
+    display: none;
+  }
+}
+
 @media (max-width: 1080px) {
   .hero-content-grid {
     grid-template-columns: 1fr;
@@ -2638,6 +2802,18 @@ body {
 }
 
 @media (max-width: 768px) {
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+  .desktop-only-item {
+    display: none !important;
+  }
+  .mobile-only-item {
+    display: block !important;
+    width: 100%;
+    text-align: center;
+  }
   .sfx-toggle, .btn-neon.nav-cta {
     display: none;
   }
@@ -2694,6 +2870,7 @@ body {
     font-size: 1.05rem;
     font-weight: 600;
     padding: 10px 16px;
+    display: block;
     width: 100%;
     text-align: center;
     border-radius: 8px;

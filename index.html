@@ -30,7 +30,7 @@
        ================================================================= -->
   <header class="site-header">
     <div class="container nav-wrap">
-      <a href="#" class="brand-logo" id="nav-brand-link">
+      <a href="#hero" class="brand-logo" id="nav-brand-link">
         <div class="brand-logo-icon">
           <img src="assets/images/fire_fitness_logo.png" alt="Fire Fitness Official Logo" class="brand-logo-img">
         </div>
@@ -39,13 +39,35 @@
 
       <nav>
         <ul class="nav-links">
-          <li><a href="#hero" class="nav-link">Overview</a></li>
           <li><a href="#why-us" class="nav-link">Why Us</a></li>
           <li><a href="#programs" class="nav-link">Programs</a></li>
           <li><a href="#pricing" class="nav-link">Pricing</a></li>
-          <li><a href="#biometrics" class="nav-link">Biometrics</a></li>
           <li><a href="#trainers" class="nav-link">Trainers</a></li>
-          <li><a href="#calculator" class="nav-link">Macro Lab</a></li>
+          <!-- Desktop Dropdown for Specialized Labs -->
+          <li class="nav-item-dropdown desktop-only-item">
+            <a href="#biometrics" class="nav-link nav-dropdown-trigger">
+              Lab <span class="dropdown-chevron">▾</span>
+            </a>
+            <div class="nav-dropdown-menu">
+              <a href="#biometrics" class="nav-dropdown-item">
+                <span class="dropdown-item-icon">⚡</span>
+                <div class="dropdown-item-text">
+                  <span class="dropdown-item-title">Biometrics</span>
+                  <span class="dropdown-item-desc">Live Telemetry &amp; Vitals</span>
+                </div>
+              </a>
+              <a href="#calculator" class="nav-dropdown-item">
+                <span class="dropdown-item-icon">🧬</span>
+                <div class="dropdown-item-text">
+                  <span class="dropdown-item-title">Macro Lab</span>
+                  <span class="dropdown-item-desc">Calorie &amp; Macro Calculator</span>
+                </div>
+              </a>
+            </div>
+          </li>
+          <!-- Mobile Direct Items -->
+          <li class="mobile-only-item"><a href="#biometrics" class="nav-link">Biometrics</a></li>
+          <li class="mobile-only-item"><a href="#calculator" class="nav-link">Macro Lab</a></li>
           <li><a href="#location" class="nav-link">Location</a></li>
         </ul>
       </nav>
@@ -54,7 +76,7 @@
         <!-- Audio SFX Toggle Button -->
         <button class="sfx-toggle active" id="sfx-toggle-btn" title="Toggle Futuristic Cyber Sound Effects">
           <span class="sfx-pulse-dot"></span>
-          <span class="sfx-text">AUDIO: ON</span>
+          <span class="sfx-text">SFX: ON</span>
         </button>
 
         <!-- VIP Pass Modal Trigger -->
