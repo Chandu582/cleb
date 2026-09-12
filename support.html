@@ -228,8 +228,25 @@
           </div>
 
           <div class="modal-form-group">
-            <label class="modal-form-label" for="support-phone">Mobile Number (WhatsApp)</label>
-            <input type="tel" id="support-phone" class="modal-form-input" placeholder="10-digit number (e.g. 7857895996)" maxlength="10" minlength="10" pattern="[0-9]{10}" required>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <label class="modal-form-label" for="support-phone" style="margin-bottom: 0;">Mobile Number (WhatsApp)</label>
+              <span id="support-phone-digit-badge" style="font-size: 0.72rem; font-weight: 700; color: #ff5533; font-family: monospace; letter-spacing: 0.5px;">0/10 Digits</span>
+            </div>
+            <input 
+              type="tel" 
+              id="support-phone" 
+              class="modal-form-input" 
+              placeholder="Enter 10-digit number (e.g. 7857895996)" 
+              maxlength="10" 
+              minlength="10" 
+              inputmode="numeric" 
+              pattern="[0-9]{10}" 
+              title="Kripya exact 10 digit ka mobile number dalein" 
+              autocomplete="tel" 
+              required>
+            <div style="font-size: 0.72rem; color: #888888; margin-top: 5px;">
+              <span>Only numbers allowed • Strictly 10 digits (Letters not allowed)</span>
+            </div>
           </div>
         </div>
 
@@ -358,13 +375,49 @@
         });
       });
 
+      // Strict 10-digit numeric restriction for support-phone (Blocks letters, symbols, spaces)
+      const supportPhoneInput = document.getElementById('support-phone');
+      const supportBadge = document.getElementById('support-phone-digit-badge');
+      if (supportPhoneInput) {
+        const syncSupportPhoneState = () => {
+          supportPhoneInput.value = supportPhoneInput.value.replace(/\D/g, '').slice(0, 10);
+          if (supportBadge) {
+            supportBadge.textContent = `${supportPhoneInput.value.length}/10 Digits`;
+            supportBadge.style.color = supportPhoneInput.value.length === 10 ? '#25d366' : '#ff5533';
+          }
+        };
+
+        supportPhoneInput.addEventListener('input', syncSupportPhoneState);
+        supportPhoneInput.addEventListener('paste', () => setTimeout(syncSupportPhoneState, 0));
+        supportPhoneInput.addEventListener('keypress', (e) => {
+          if (!/[0-9]/.test(e.key) && e.key !== 'Enter') {
+            e.preventDefault();
+          }
+        });
+        supportPhoneInput.addEventListener('keydown', (e) => {
+          const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Enter'];
+          if (supportPhoneInput.value.length >= 10 && !allowedKeys.includes(e.key) && !e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+          }
+        });
+      }
+
       // Support Query Form Handler
       const supportForm = document.getElementById('support-query-form');
       if (supportForm) {
         supportForm.addEventListener('submit', (e) => {
           e.preventDefault();
+          const phoneRaw = supportPhoneInput?.value.trim() || '';
+          const phoneDigits = phoneRaw.replace(/\D/g, '');
+
+          if (phoneDigits.length !== 10) {
+            alert('Kripya exact 10-digit mobile number enter karein (letters allow nahi hain)!');
+            supportPhoneInput?.focus();
+            return;
+          }
+
           const name = document.getElementById('support-name').value.trim();
-          const phone = document.getElementById('support-phone').value.trim();
+          const phone = phoneDigits;
           const category = document.getElementById('support-category').value;
           const message = document.getElementById('support-message').value.trim();
 
