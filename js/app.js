@@ -120,7 +120,15 @@ document.addEventListener('DOMContentLoaded', () => {
       navLinks.style.right = '0';
       navLinks.style.background = '#09090b';
       navLinks.style.padding = '24px';
-      navLinks.style.borderBottom = '1px solid #ccff00';
+      navLinks.style.borderBottom = '1px solid #ff2a00';
+    });
+
+    navLinks.querySelectorAll('.nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 768) {
+          navLinks.style.display = 'none';
+        }
+      });
     });
   }
 
