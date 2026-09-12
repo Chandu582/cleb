@@ -61,7 +61,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Native responsive scrolling - eliminates slow, sluggish mouse wheel lag */
   color-scheme: dark;
   background-color: var(--bg-deep);
   font-family: var(--font-body);
@@ -595,6 +595,7 @@ body {
   height: 100%;
   position: relative;
   cursor: grab;
+  contain: layout paint;
 }
 
 #three-canvas-container:active {
@@ -606,6 +607,15 @@ body {
   height: 100% !important;
   display: block;
   outline: none;
+  touch-action: pan-y;
+}
+
+/* Desktop Orbiting Badges Grid Wrapper */
+.hud-badges-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
 }
 
 /* 3D Canvas Cyber Controls Overlay */
@@ -2602,19 +2612,130 @@ body {
   .mobile-toggle {
     display: block;
   }
+  .hero-section {
+    padding-top: 96px;
+    padding-bottom: 36px;
+    min-height: auto;
+  }
+  .hero-headline {
+    font-size: clamp(1.95rem, 7.5vw, 2.65rem);
+    line-height: 1.12;
+    margin-bottom: 16px;
+  }
+  .hero-subtext {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .btn-hero-cta, .hero-cta-group .btn-outline {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    justify-content: center;
+  }
+  .hero-social-proof {
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  /* Spacious, Un-congested 3D Hero Viewport */
+  .hero-3d-wrapper {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 0;
+    margin-top: 6px;
+  }
+  #three-canvas-container {
+    height: 330px;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  #three-canvas-container canvas {
+    touch-action: pan-y;
+  }
+
+  /* Cyber controls sit cleanly below the 3D canvas */
+  .canvas-cyber-controls {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    margin-top: -16px;
+    margin-bottom: 16px;
+    z-index: 25;
+    gap: 8px;
+    padding: 6px 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    background: rgba(14, 12, 14, 0.92);
+  }
+  .canvas-control-btn {
+    font-size: 0.68rem;
+    padding: 3px 6px;
+  }
+
+  /* 2x2 Telemetry Badges Grid - Clean, Organized, Zero Overlap */
+  .hud-badges-grid {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 480px;
+    pointer-events: auto;
+    margin-top: 4px;
+  }
+  .hud-badge {
+    position: static;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    animation: none;
+    padding: 10px 12px;
+    gap: 10px;
+    border-radius: 12px;
+    background: rgba(18, 14, 16, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  }
+  .hud-icon-box {
+    width: 34px;
+    height: 34px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .hud-value {
+    font-size: 0.92rem;
+    line-height: 1.15;
+  }
+  .hud-label {
+    font-size: 0.62rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .programs-grid {
     grid-template-columns: 1fr;
   }
-  .hud-badge {
-    padding: 8px 12px;
-  }
-  .hud-value {
-    font-size: 0.95rem;
-  }
-  .hud-badge-1 { top: 5%; left: 0%; }
-  .hud-badge-2 { top: 5%; right: 0%; }
-  .hud-badge-3 { bottom: 12%; left: 0%; }
-  .hud-badge-4 { bottom: 12%; right: 0%; }
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 36px;
@@ -2693,6 +2814,36 @@ body {
 }
 
 @media (max-width: 420px) {
+  #three-canvas-container {
+    height: 290px;
+  }
+  .canvas-cyber-controls {
+    gap: 5px;
+    padding: 5px 10px;
+  }
+  .canvas-control-btn {
+    font-size: 0.62rem;
+    padding: 2px 4px;
+  }
+  .hud-badges-grid {
+    gap: 8px;
+  }
+  .hud-badge {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .hud-icon-box {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
+  .hud-value {
+    font-size: 0.84rem;
+  }
+  .hud-label {
+    font-size: 0.56rem;
+  }
+
   .modal-overlay {
     padding: 10px 6px;
   }

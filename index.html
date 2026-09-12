@@ -121,39 +121,6 @@
 
       <!-- Right Column: Central 3D Interactive Canvas & Floating HUD Badges -->
       <div class="hero-3d-wrapper">
-        <!-- Orbiting Floating HUD Metric Badges -->
-        <div class="hud-badge hud-badge-1" id="hud-badge-time">
-          <div class="hud-icon-box hud-icon-lime">⏱️</div>
-          <div class="hud-data">
-            <span class="hud-value">1.5 Hours</span>
-            <span class="hud-label">Daily Session Target</span>
-          </div>
-        </div>
-
-        <div class="hud-badge hud-badge-2" id="hud-badge-energy">
-          <div class="hud-icon-box hud-icon-orange">🔥</div>
-          <div class="hud-data">
-            <span class="hud-value">550 Kcal</span>
-            <span class="hud-label">Active Burn Rate</span>
-          </div>
-        </div>
-
-        <div class="hud-badge hud-badge-3" id="hud-badge-poses">
-          <div class="hud-icon-box hud-icon-cyan">⚡</div>
-          <div class="hud-data">
-            <span class="hud-value">20 Poses</span>
-            <span class="hud-label">AI Kinematic Routines</span>
-          </div>
-        </div>
-
-        <div class="hud-badge hud-badge-4" id="hud-badge-sets">
-          <div class="hud-icon-box hud-icon-purple">💪</div>
-          <div class="hud-data">
-            <span class="hud-value">5 Sets</span>
-            <span class="hud-label">Hypertrophy Index</span>
-          </div>
-        </div>
-
         <!-- 3D WebGL Canvas Container -->
         <div id="three-canvas-container" title="Drag to inspect 3D Biomechanical Gear"></div>
 
@@ -168,6 +135,41 @@
           <button class="canvas-control-btn" id="reset-3d-btn" title="Reset Camera">
             🎯 RESET VIEW
           </button>
+        </div>
+
+        <!-- Orbiting Floating HUD Metric Badges / Telemetry Grid on Mobile -->
+        <div class="hud-badges-grid">
+          <div class="hud-badge hud-badge-1" id="hud-badge-time">
+            <div class="hud-icon-box hud-icon-lime">⏱️</div>
+            <div class="hud-data">
+              <span class="hud-value">1.5 Hours</span>
+              <span class="hud-label">Daily Session Target</span>
+            </div>
+          </div>
+
+          <div class="hud-badge hud-badge-2" id="hud-badge-energy">
+            <div class="hud-icon-box hud-icon-orange">🔥</div>
+            <div class="hud-data">
+              <span class="hud-value">550 Kcal</span>
+              <span class="hud-label">Active Burn Rate</span>
+            </div>
+          </div>
+
+          <div class="hud-badge hud-badge-3" id="hud-badge-poses">
+            <div class="hud-icon-box hud-icon-cyan">⚡</div>
+            <div class="hud-data">
+              <span class="hud-value">20 Poses</span>
+              <span class="hud-label">AI Kinematic Routines</span>
+            </div>
+          </div>
+
+          <div class="hud-badge hud-badge-4" id="hud-badge-sets">
+            <div class="hud-icon-box hud-icon-purple">💪</div>
+            <div class="hud-data">
+              <span class="hud-value">5 Sets</span>
+              <span class="hud-label">Hypertrophy Index</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

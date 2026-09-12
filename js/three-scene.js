@@ -250,7 +250,16 @@
     const windowHalfY = window.innerHeight / 2;
     mouseX = (e.clientX - windowHalfX) / windowHalfX;
     mouseY = (e.clientY - windowHalfY) / windowHalfY;
-  });
+  }, { passive: true });
+
+  // Scroll Reactivity: 3D apparatus rotates fluidly with page scroll
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+    const scrollDelta = (currentY - lastScrollY) * 0.003;
+    targetRotationY += scrollDelta;
+    lastScrollY = currentY;
+  }, { passive: true });
 
   // Drag interaction on canvas
   renderer.domElement.addEventListener('mousedown', (e) => {
@@ -274,29 +283,49 @@
     targetRotationX += spinVelocity.y;
 
     previousMousePos = { x: e.clientX, y: e.clientY };
-  });
+  }, { passive: true });
 
-  // Touch Support
+  // Touch Support (Smart vertical pass-through so page scroll never stutters on phone)
+  let touchStartPos = { x: 0, y: 0 };
+  let isHorizontalTouch = false;
+
   renderer.domElement.addEventListener('touchstart', (e) => {
     if (e.touches.length === 1) {
       isDragging = true;
+      isHorizontalTouch = false;
+      touchStartPos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       previousMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     }
   }, { passive: true });
 
   window.addEventListener('touchend', () => {
     isDragging = false;
+    isHorizontalTouch = false;
   });
 
   window.addEventListener('touchmove', (e) => {
     if (!isDragging || e.touches.length !== 1) return;
-    const deltaX = e.touches[0].clientX - previousMousePos.x;
-    const deltaY = e.touches[0].clientY - previousMousePos.y;
+    const currentX = e.touches[0].clientX;
+    const currentY = e.touches[0].clientY;
+    const diffX = Math.abs(currentX - touchStartPos.x);
+    const diffY = Math.abs(currentY - touchStartPos.y);
 
-    targetRotationY += deltaX * 0.008;
-    targetRotationX += deltaY * 0.008;
+    // If gesture is vertical, release dragging immediately to let phone smoothly scroll
+    if (!isHorizontalTouch && diffY > diffX && diffY > 6) {
+      isDragging = false;
+      return;
+    }
+    if (diffX > diffY && diffX > 6) {
+      isHorizontalTouch = true;
+    }
 
-    previousMousePos = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    if (isHorizontalTouch) {
+      const deltaX = currentX - previousMousePos.x;
+      const deltaY = currentY - previousMousePos.y;
+      targetRotationY += deltaX * 0.008;
+      targetRotationX += deltaY * 0.008;
+    }
+    previousMousePos = { x: currentX, y: currentY };
   }, { passive: true });
 
   // Wireframe Mode Toggle
@@ -346,28 +375,30 @@
       return;
     }
     animFrameId = requestAnimationFrame(animate);
+    const delta = Math.min(clock.getDelta(), 0.1);
     const elapsedTime = clock.getElapsedTime();
 
-    // Auto idle orbit
+    // Delta-timed smooth idle orbit (never slows down on scroll or frame drops)
     if (!isDragging) {
-      targetRotationY += 0.005 * rotationSpeed;
+      targetRotationY += delta * 0.75 * rotationSpeed;
     }
 
     // Parallax influence from mouse
     const parallaxX = mouseX * 0.35;
     const parallaxY = mouseY * 0.25;
 
-    // Smooth Euler damping
-    mainRig.rotation.y += (targetRotationY + parallaxX - mainRig.rotation.y) * 0.06;
-    mainRig.rotation.x += (targetRotationX + parallaxY - mainRig.rotation.x) * 0.06;
+    // Smooth Euler damping with delta time
+    const damping = Math.min(1, delta * 4.5);
+    mainRig.rotation.y += (targetRotationY + parallaxX - mainRig.rotation.y) * damping;
+    mainRig.rotation.x += (targetRotationX + parallaxY - mainRig.rotation.x) * damping;
 
     // Floating breathing bounce
     mainRig.position.y = Math.sin(elapsedTime * 1.5) * 0.15;
 
-    // Gyro Rings individual rotations
-    ring1Mesh.rotation.z += 0.012 * rotationSpeed;
-    ring2Mesh.rotation.y -= 0.016 * rotationSpeed;
-    ring3Mesh.rotation.x += 0.008 * rotationSpeed;
+    // Gyro Rings individual rotations with delta time
+    ring1Mesh.rotation.z += delta * 1.4 * rotationSpeed;
+    ring2Mesh.rotation.y -= delta * 1.8 * rotationSpeed;
+    ring3Mesh.rotation.x += delta * 1.0 * rotationSpeed;
 
     // Particle Drift
     particleSystem.rotation.y = elapsedTime * 0.03;

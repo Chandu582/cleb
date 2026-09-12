@@ -132,6 +132,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Smooth Scroll for In-Page Anchor Links (Overview, Why Us, Programs, Pricing, Location, etc.)
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (targetId && targetId !== '#' && targetId.length > 1) {
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          e.preventDefault();
+          const headerEl = document.querySelector('.site-header');
+          const headerOffset = headerEl ? headerEl.offsetHeight + 10 : 70;
+          const elementPosition = targetEl.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+
   // ==========================================
   // 3. 3D CARD TILT & SPECULAR GLARE (RAF THROTTLED, DESKTOP ONLY)
   // ==========================================
